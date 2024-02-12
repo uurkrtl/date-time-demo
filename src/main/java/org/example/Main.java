@@ -1,5 +1,6 @@
 package org.example;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -21,6 +22,11 @@ public class Main {
         System.out.println(now.format(dateFormatter) + (now.isBefore(afterTwoWeeks) ? " is before " : " is after ") + afterTwoWeeks.format(dateFormatter));
 
         //Step 4: Calculate the difference in days between two arbitrary dates and output the result.
-        System.out.printf("There are %d days between %s and %s%n ", (int) ChronoUnit.DAYS.between(now, afterTwoWeeks), now.format(dateFormatter).toString(), afterTwoWeeks.format(dateFormatter).toString());
+        System.out.printf("There are %d days between %s and %s%n", (int) ChronoUnit.DAYS.between(now, afterTwoWeeks), now.format(dateFormatter).toString(), afterTwoWeeks.format(dateFormatter).toString());
+
+        //Bonus: Print on the command line how many days are left until the next birthday of the animal.
+        Animal cat = new Animal("Mittens", LocalDate.of(2015, 5, 31));
+        LocalDate nextBirthday = cat.getBirthday().withYear(now.getYear()).isBefore(now.toLocalDate()) ? cat.getBirthday().withYear(now.getYear() + 1) : cat.getBirthday().withYear(now.getYear());
+        System.out.printf("%nThere are %d days left until %s's next birthday%n", (int) ChronoUnit.DAYS.between(now.toLocalDate(), nextBirthday), cat.getName());
     }
 }
